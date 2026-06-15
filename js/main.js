@@ -70,6 +70,7 @@ function initTabs() {
   const panels = {
     fixed:  document.getElementById('tab-fixed'),
     custom: document.getElementById('tab-custom'),
+    table:  document.getElementById('tab-table'),
   };
 
   tabs.forEach((tab) => {
@@ -88,7 +89,7 @@ function initTabs() {
         }
       });
 
-      // カスタムタブを開いたとき初期計算
+      // カスタムタブを開いたとき再計算
       if (target === 'custom') {
         calcPrice();
       }
@@ -99,6 +100,10 @@ function initTabs() {
 // ============================================================
 // PRICE SIMULATOR — 計算ロジック
 // ============================================================
+
+const MANAGE_FEE   = 50000; // 運用管理費（固定）
+const THUMB_PRICE  = 2500;  // サムネイル1枚あたり
+const SUGGEST_LINE = 250000; // この金額を超えたらコミコミプランを提案
 
 /**
  * 撮影費計算
@@ -113,15 +118,19 @@ function calcShootCostPerSession(hours) {
 }
 
 /**
- * 編集費計算
- * 10分まで ¥15,000、3分超過ごと +¥3,000
+ * 編集費計算（形式別）
+ * 座談形式：10分まで ¥15,000、3分超過ごと +¥3,000
+ * ロケ形式：座談の1.5倍（10分まで ¥22,500、3分超過ごと +¥4,500）
  * @param {number} minutes - 動画の尺（分）
+ * @param {boolean} isLocation - ロケ形式なら true
  * @returns {number}
  */
-function calcEditCostPerVideo(minutes) {
-  const base  = 15000;
-  const extra = Math.max(0, Math.ceil((minutes - 10) / 3)) * 3000;
-  return base + extra;
+function calcEditCostPerVideo(minutes, isLocation) {
+  const base   = 15000;
+  const step   = 3000;
+  const extra  = Math.max(0, Math.ceil((minutes - 10) / 3)) * step;
+  const cost   = base + extra;
+  return isLocation ? cost * 1.5 : cost;
 }
 
 /** 金額をカンマ区切り円表示に変換 */
@@ -140,36 +149,67 @@ function getSliderVal(id) {
 }
 
 function calcPrice() {
-  const shootCount   = getCounterVal('shoot-count');
-  const shootHours   = getSliderVal('shoot-hours');
-  const editCount    = getCounterVal('edit-count');
-  const editMinutes  = getSliderVal('edit-minutes');
+  // 入力値
+  const talkCount  = getCounterVal('talk-count');
+  const talkMin    = getSliderVal('talk-minutes');
+  const locCount   = getCounterVal('loc-count');
+  const locMin     = getSliderVal('loc-minutes');
+  const thumbCount = getCounterVal('thumb-count');
+  const shootCount = getCounterVal('shoot-count');
+  const shootHours = getSliderVal('shoot-hours');
 
-  const manageFee    = 50000;
-  const shootPerSess = calcShootCostPerSession(shootHours);
-  const editPerVid   = calcEditCostPerVideo(editMinutes);
-  const totalShoot   = shootCount * shootPerSess;
-  const totalEdit    = editCount  * editPerVid;
-  const total        = manageFee + totalShoot + totalEdit;
+  // 単価・小計
+  const talkPerVid  = calcEditCostPerVideo(talkMin, false);
+  const locPerVid   = calcEditCostPerVideo(locMin, true);
+  const shootPerSes = calcShootCostPerSession(shootHours);
 
-  // 内訳 HTML 生成
-  const breakdownEl = document.getElementById('sim-breakdown');
-  breakdownEl.innerHTML = `
-    <div class="price__sim-breakdown-item">
-      <span>運用管理費（固定）</span>
-      <span>${yen(manageFee)}</span>
-    </div>
-    <div class="price__sim-breakdown-item">
-      <span>撮影費（${shootCount}回 × ${shootHours}時間 → ${yen(shootPerSess)}/回）</span>
-      <span>${yen(totalShoot)}</span>
-    </div>
-    <div class="price__sim-breakdown-item">
-      <span>編集費（${editCount}本 × ${editMinutes}分 → ${yen(editPerVid)}/本）</span>
-      <span>${yen(totalEdit)}</span>
-    </div>
-  `;
+  const talkTotal  = talkCount  * talkPerVid;
+  const locTotal   = locCount   * locPerVid;
+  const thumbTotal = thumbCount * THUMB_PRICE;
+  const shootTotal = shootCount * shootPerSes;
+  const total      = MANAGE_FEE + talkTotal + locTotal + thumbTotal + shootTotal;
+
+  // 各グループの小計表示
+  document.getElementById('talk-subtotal').textContent  = yen(talkTotal);
+  document.getElementById('loc-subtotal').textContent   = yen(locTotal);
+  document.getElementById('thumb-subtotal').textContent = yen(thumbTotal);
+  document.getElementById('shoot-subtotal').textContent = yen(shootTotal);
+
+  // 合計内訳（数量があるものだけ表示）
+  const rows = [
+    { label: '運用管理費（固定）', value: MANAGE_FEE, show: true },
+    {
+      label: `編集費・座談（${talkCount}本 × ${talkMin}分 → ${yen(talkPerVid)}/本）`,
+      value: talkTotal, show: talkCount > 0,
+    },
+    {
+      label: `編集費・ロケ（${locCount}本 × ${locMin}分 → ${yen(locPerVid)}/本）`,
+      value: locTotal, show: locCount > 0,
+    },
+    {
+      label: `サムネイル（${thumbCount}枚 × ${yen(THUMB_PRICE)}）`,
+      value: thumbTotal, show: thumbCount > 0,
+    },
+    {
+      label: `撮影費（${shootCount}回 × ${shootHours}時間 → ${yen(shootPerSes)}/回）`,
+      value: shootTotal, show: shootCount > 0,
+    },
+  ];
+
+  document.getElementById('sim-breakdown').innerHTML = rows
+    .filter((r) => r.show)
+    .map((r) => `
+      <div class="price__sim-breakdown-item">
+        <span>${r.label}</span>
+        <span>${yen(r.value)}</span>
+      </div>`)
+    .join('');
 
   document.getElementById('sim-total').textContent = yen(total);
+
+  // コミコミプラン提案メッセージ
+  const suggestEl = document.getElementById('price-suggest');
+  suggestEl.classList.toggle('price__suggest--hidden', total <= SUGGEST_LINE);
 }
 
 // ============================================================
@@ -182,7 +222,7 @@ function initCounters() {
       const valEl    = document.getElementById(targetId);
       const dir      = parseInt(btn.dataset.dir, 10);
       const current  = parseInt(valEl.textContent, 10);
-      const next     = Math.max(1, current + dir);
+      const next     = Math.max(0, current + dir);
 
       if (next !== current) {
         valEl.textContent = next;
@@ -196,22 +236,20 @@ function initCounters() {
 // SLIDER
 // ============================================================
 function initSliders() {
-  // 撮影時間スライダー
-  const shootSlider  = document.getElementById('shoot-hours');
-  const shootDisplay = document.getElementById('shoot-hours-val');
+  // 値表示とスライダーIDの対応
+  const pairs = [
+    ['talk-minutes',  'talk-minutes-val'],
+    ['loc-minutes',   'loc-minutes-val'],
+    ['shoot-hours',   'shoot-hours-val'],
+  ];
 
-  shootSlider.addEventListener('input', () => {
-    shootDisplay.textContent = shootSlider.value;
-    calcPrice();
-  });
-
-  // 尺スライダー
-  const editSlider  = document.getElementById('edit-minutes');
-  const editDisplay = document.getElementById('edit-minutes-val');
-
-  editSlider.addEventListener('input', () => {
-    editDisplay.textContent = editSlider.value;
-    calcPrice();
+  pairs.forEach(([sliderId, displayId]) => {
+    const slider  = document.getElementById(sliderId);
+    const display = document.getElementById(displayId);
+    slider.addEventListener('input', () => {
+      display.textContent = slider.value;
+      calcPrice();
+    });
   });
 }
 

@@ -729,6 +729,150 @@ em {
   letter-spacing: 0.04em;
 }
 
+/* Simulator — グループ */
+.price__group {
+  border: 1px solid var(--border);
+  background: #0f0f0f;
+  padding: 20px 22px 0;
+  margin-bottom: 16px;
+}
+
+.price__group-head {
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+.price__group-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price__group-sub {
+  font-size: 0.76rem;
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+.price__badge {
+  display: inline-block;
+  background: var(--sub);
+  color: var(--bg);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  padding: 4px 9px 3px;
+  border-radius: 2px;
+}
+
+.price__badge--inline {
+  font-size: 0.78rem;
+  padding: 3px 7px 2px;
+  vertical-align: middle;
+}
+
+.price__group-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  gap: 16px;
+}
+
+.price__subtotal-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--sub);
+  letter-spacing: 0.04em;
+}
+
+.price__sim-row--fixed {
+  border-bottom: none;
+  padding-top: 8px;
+}
+
+/* Simulator — コミコミプラン提案 */
+.price__suggest {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #180c0a 0%, #14100a 100%);
+  border: 1px solid rgba(245, 200, 66, 0.5);
+  font-size: 0.84rem;
+  line-height: 1.85;
+  color: #e8e8e8;
+}
+
+.price__suggest strong {
+  color: var(--sub);
+  font-weight: 700;
+}
+
+.price__suggest-icon {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.price__suggest--hidden {
+  display: none;
+}
+
+/* 料金表 */
+.price__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.price__table th,
+.price__table td {
+  text-align: left;
+  padding: 15px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.price__table thead th {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  white-space: nowrap;
+}
+
+.price__table tbody td {
+  color: var(--text-muted);
+}
+
+.price__table-item {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.price__table-note {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 300;
+  color: var(--gray);
+  margin-top: 3px;
+}
+
+.price__table tbody tr:hover td {
+  background: #121212;
+}
+
 /* ============================================================
    FLOW
 ============================================================ */
@@ -959,6 +1103,21 @@ em {
 
   .price__sim-label {
     width: 100%;
+  }
+
+  .price__group {
+    padding: 18px 16px 0;
+  }
+
+  .price__tab {
+    padding: 12px 8px;
+    font-size: 0.82rem;
+  }
+
+  .price__table th,
+  .price__table td {
+    padding: 12px 10px;
+    font-size: 0.8rem;
   }
 
   /* FLOW */
