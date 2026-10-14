@@ -1,0 +1,39 @@
+# This directory is versioned for scripts, manifests, transcripts and briefs only.
+# Raw/generated media and model weights are transferred separately.
+
+# Video and audio media
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.mkv
+*.avi
+*.wav
+*.flac
+*.mp3
+*.m4a
+
+# Model weights and local AI installations
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.safetensors
+models/
+vendor/
+.local/
+
+# Generated working files
+outputs/
+results/
+cache/
+tmp/
+.venv/
+__pycache__/
+*.pyc
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+

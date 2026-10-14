@@ -1,0 +1,79 @@
+{
+  "source": {
+    "video": "内製化について.mp4",
+    "transcript": "内製化について.txt",
+    "duration_seconds": 1155.59
+  },
+  "recommended_concept": "編集まで内製化すると失敗する",
+  "target_duration_seconds": 30,
+  "cta": {
+    "type": "related_video",
+    "destination_url": "https://youtu.be/lglhHtKFy-I?si=jQshzAKLSUOCoTGs",
+    "video_id": "lglhHtKFy-I",
+    "status": "確定"
+  },
+  "avatar": {
+    "performer": "白シャツの主話者（確定）",
+    "format": "9:16",
+    "framing": "胸上・正面・カメラ目線",
+    "delivery": "断定的だが煽りすぎない、経営者向けの説明口調",
+    "consent": {
+      "user_confirmed": true,
+      "confirmed_date": "2026-10-14",
+      "platform_consent_video_required": true
+    },
+    "source_footage": {
+      "path": "20260730_Acam_Hayasi_1465.MP4",
+      "duration_seconds": 219.219,
+      "resolution": "1920x1080",
+      "audio": "PCM 48kHz stereo",
+      "quality_status": "白シャツの本人のみが映るカットなしグリーンバック素材。正式なアバター元映像として使用"
+    },
+    "training_candidate": {
+      "path": "avatar_training_candidate_white_1465_150-190.mp4",
+      "source_range": "00:02:30-00:03:10",
+      "duration_seconds": 40.006633,
+      "resolution": "720x1280",
+      "video_codec": "H.264",
+      "audio_codec": "AAC mono 48kHz",
+      "status": "ローカルAI生成テスト準備済み"
+    },
+    "voice_reference": {
+      "path": "voice_reference_white_1465_150-160.wav",
+      "source_range": "00:02:30-00:02:40",
+      "duration_seconds": 10,
+      "format": "PCM 16-bit 48kHz mono",
+      "status": "GPT-SoVITS参照音声として準備済み。発話テキストはASR後に目視修正する"
+    }
+  },
+  "script": [
+    "『YouTubeを内製化するなら、編集も社員で』は失敗しやすいです。",
+    "社内に残すのは、自社の知識を企画にすること、撮影、品質判断。",
+    "編集作業は外注する。",
+    "つまり、全部ではなく、強みだけを内製化します。",
+    "ただし、最初からプロに任せるべき会社もあります。",
+    "判断基準は、関連動画で解説しています。"
+  ],
+  "source_timecodes": [
+    {
+      "start": "00:09:22",
+      "end": "00:10:08",
+      "claim": "編集作業は外注前提で、編集まで自社で行う企業はほぼない"
+    },
+    {
+      "start": "00:06:23",
+      "end": "00:06:50",
+      "claim": "スピードと深い社内ナレッジは内製化に向く"
+    },
+    {
+      "start": "00:16:28",
+      "end": "00:16:54",
+      "claim": "丸投げや大規模施策を望む企業は外注に向く"
+    }
+  ],
+  "remaining_requirements": [
+    "WindowsでGPU・VRAMを診断",
+    "40秒の候補映像を使い、冒頭8秒のローカル生成テスト",
+    "採用ツールや公開先が追加の同意記録を求める場合はその手続き"
+  ]
+}

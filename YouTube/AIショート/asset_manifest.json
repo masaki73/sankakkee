@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-14",
+  "project": "AIショート／内製化について",
+  "asset_root_environment_variable": "AI_SHORT_ASSETS_ROOT",
+  "recommended_windows_asset_root": "D:\\ai-short-assets",
+  "external_assets": [
+    {
+      "filename": "20260730_Acam_Hayasi_1465.MP4",
+      "role": "primary_avatar_source",
+      "bytes": 1476736894,
+      "sha256": "8d7783fbb6aeca493b50154bdfa99d0d048c9badb5fc0fb66c07051b9fd1076b",
+      "duration_seconds": 219.219,
+      "video": "H.264 1920x1080 29.97fps",
+      "audio": "PCM 16-bit big-endian 48kHz stereo",
+      "notes": "White-shirt presenter only; uncut green-screen source. Preserve unchanged."
+    },
+    {
+      "filename": "avatar_training_candidate_white_1465_150-190.mp4",
+      "role": "primary_avatar_test_clip",
+      "bytes": 19736446,
+      "sha256": "34f1044dbc20fa7cfe58913b21faad993a439365e0c8ae8e3350215133874afa",
+      "duration_seconds": 40.006633,
+      "video": "H.264 720x1280",
+      "audio": "AAC 48kHz mono",
+      "source_range": "00:02:30-00:03:10",
+      "notes": "First-choice local avatar and lip-sync test input."
+    },
+    {
+      "filename": "avatar_training_candidate_white_880-915.mp4",
+      "role": "legacy_avatar_test_clip",
+      "bytes": 12259480,
+      "sha256": "ae669f41ce107803b75acff7213c34b749b2a7e8b6a049dbc7f04e08d648fcc5",
+      "duration_seconds": 35.001633,
+      "video": "H.264 720x1280 29.97fps",
+      "audio": "AAC 48kHz mono",
+      "notes": "Derived from the previous two-person source; retained only as fallback."
+    },
+    {
+      "filename": "voice_reference_white_1465_150-160.wav",
+      "role": "primary_voice_reference",
+      "bytes": 960078,
+      "sha256": "e7c89914ec10ee95c63037f77768a5b079353244b8bb612b8b9386b2ed58c5af",
+      "duration_seconds": 10.0,
+      "audio": "PCM signed 16-bit little-endian 48kHz mono",
+      "source_range": "00:02:30-00:02:40",
+      "notes": "Use as the first GPT-SoVITS reference; transcribe and manually correct its spoken text on Windows."
+    },
+    {
+      "filename": "内製化について.mp4",
+      "role": "edited_longform_and_broll",
+      "bytes": 2358372991,
+      "sha256": "384ce9cc0be5bcc2c82da5942c0e5756980e3d7d192a2bb47abf179283d0e901",
+      "duration_seconds": 1155.587771,
+      "video": "H.264 1920x1080 29.97fps",
+      "audio": "AAC 48kHz stereo",
+      "notes": "Use for factual reference and B-roll, not avatar training."
+    }
+  ],
+  "repository_assets": [
+    {
+      "filename": "内製化について.txt",
+      "role": "transcript",
+      "sha256": "67cb34f0e51bd3c2b10bdbe8b8c1c02368fdfb41a1d02599b4556b32abba04b6"
+    }
+  ]
+}
+
