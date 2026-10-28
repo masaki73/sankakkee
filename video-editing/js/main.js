@@ -1,8 +1,6 @@
 'use strict';
 
-// Googleフォーム作成後、この定数に公開URLを設定してください。
-// 未設定の間は既存のメール問い合わせをフォールバックとして使用します。
-const CONTACT_FORM_URL = '';
+const CONTACT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSe34v5haudJFQr_Eypin6_C5NW8vS26LeVa_hw1Qix_totukA/viewform';
 const CONTACT_FALLBACK_URL = 'mailto:sankakkee310@gmail.com?subject=' + encodeURIComponent('動画編集についての相談');
 
 function initContactLinks() {
